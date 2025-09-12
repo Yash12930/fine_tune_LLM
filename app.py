@@ -20,7 +20,7 @@ def load_specialist_model():
     # Load the base model
     model = AutoModelForCausalLM.from_pretrained(
         base_model_hub_id,
-        dtype=torch.bfloat16,
+        dtype=torch.float32,
         device_map="auto",
         trust_remote_code=True,
     )
