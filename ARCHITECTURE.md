@@ -1,19 +1,24 @@
-# AI Agent Architecture
+AI Agent Architecture
+1. Overview
+This project is an AI agent designed to automate the task of drafting replies to messages, specifically for student and professional academic contexts. It follows a multi-agent Planner-Executor design pattern to structure its reasoning and execution flow.
 
-## 1. Overview
-[cite_start]This project is an AI agent that automates the task of drafting replies to messages, acting as a conversational assistant for student-related topics. [cite: 3] [cite_start]It uses a multi-agent Planner-Executor design pattern to structure its reasoning and execution flow. [cite: 14]
+2. Components
+Planner Agent: A Python function (planner) that acts as the "thinking" component. It receives a high-level user goal and an incoming message, and its responsibility is to create a detailed, structured prompt. This represents the "planning" stage.
 
-## 2. Components
-* **Planner Agent:** A Python function (`planner`) that takes a high-level user goal and an incoming message. It "plans" the task by creating a detailed, structured prompt for the specialist tool.
-* **Executor Agent:** A Python function (`executor`) that receives the structured plan from the Planner. It "executes" the plan by calling the fine-tuned model.
-* **Specialized Tool (Fine-Tuned Model):** A `TinyLlama-1.1B-Chat-v1.0` model fine-tuned with LoRA. [cite_start]This model is specialized in generating coherent, helpful responses for student-related conversations. [cite: 5]
+Executor Agent: A Python function (executor) that acts as the "doing" component. It receives the structured plan from the Planner and executes the task by calling the appropriate specialized tool.
 
-## 3. Interaction Flow
-1.  A user provides a high-level goal and an incoming message.
-2.  The **Planner Agent** creates a detailed prompt.
-3.  The **Executor Agent** receives this prompt and calls the **Fine-Tuned Model**.
-4.  The model generates a response, which the Executor returns as the final output.
+Specialized Tool (Fine-Tuned Model): The core tool is a TinyLlama/TinyLlama-1.1B-Chat-v1.0 model that has been fine-tuned using LoRA. This model is an expert at the specific task of generating coherent, helpful responses for student-related conversations.
 
-## 4. Design Choices
-* **Model:** `TinyLlama-1.1B-Chat-v1.0` was chosen for its strong performance and small size, which allows for very fast and efficient fine-tuning.
-* [cite_start]**Fine-Tuning:** The model was fine-tuned for **task specialization**. [cite: 11] [cite_start]The goal was to adapt its style to be more effective at generating student-related conversational replies than the base model, thereby improving its reliability. [cite: 11]
+3. Interaction Flow
+A user provides a high-level goal (e.g., "a polite decline") and an incoming message.
+
+The Planner Agent creates a detailed prompt formatted for the specialized tool.
+
+The Executor Agent receives this prompt and calls the Fine-Tuned Model Tool.
+
+The model generates a response, which the Executor cleans up and returns as the final output.
+
+4. Design Choices
+Model: TinyLlama/TinyLlama-1.1B-Chat-v1.0 was chosen for its excellent balance of performance and efficiency, which allows for very fast fine-tuning on free, consumer-grade hardware like Google Colab.
+
+Fine-Tuning: The model was fine-tuned for task specialization. The goal was to adapt its style to be more effective at generating student-related conversational replies than the base model, thereby improving its reliability and the quality of its outputs for this specific use case.
