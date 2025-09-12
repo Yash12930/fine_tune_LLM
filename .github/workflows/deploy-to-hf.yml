@@ -1,18 +1,25 @@
-name: Deploy to Hugging Face Space
+# File: .github/workflows/deploy-to-hf.yml
+
+name: Sync to Hugging Face Space
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  sync-to-hub:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          lfs: true
 
       - name: Push to Hugging Face Space
-        uses: huggingface/push-to-hub@v0
-        with:
-          repo-token: ${{ secrets.HF_TOKEN }}
-          repo-id: Yash12930/model
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git remote add space https://Yash12930:$HF_TOKEN@huggingface.co/spaces/Yash12930/model
+          git push --force space main
