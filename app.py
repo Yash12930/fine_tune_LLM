@@ -20,7 +20,7 @@ def load_specialist_model():
     # Load the base model
     model = AutoModelForCausalLM.from_pretrained(
         base_model_hub_id,
-        dtype=torch.float32,
+        torch_dtype=torch.float32,
         trust_remote_code=True,
     )
     # Load the tokenizer
