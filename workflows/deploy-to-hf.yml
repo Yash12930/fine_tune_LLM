@@ -15,4 +15,5 @@ jobs:
         uses: huggingface/hub@main
         with:
           repo-token: ${{ secrets.HF_TOKEN }}
-          repo-id: Yash12930/model1
+          repo-id: Yash12930/model
+          
