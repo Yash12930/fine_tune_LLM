@@ -33,7 +33,7 @@ except Exception as e:
 def planner(user_request: str, incoming_message: str) -> dict:
     prompt = (
         f"### Human:\nI received the following message: \"{incoming_message}\". "
-        f"Please help me draft a response that is {user_request}.\n\n"
+        f"Please help me draft a short and crisp response that is {user_request}.\n\n"
         f"### Assistant:\n"
     ) 
     plan = { "task": "generate_reply", "prompt": prompt } 
