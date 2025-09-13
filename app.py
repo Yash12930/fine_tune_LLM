@@ -86,7 +86,7 @@ st.header("Draft a Reply")
 col1, col2 = st.columns(2)
 
 with col1:
-    incoming_message = st.text_area("Incoming Message:", "Hey, I missed the lecture on Tuesday. Can I get your notes?", height=150)
+    incoming_message = st.text_area("Incoming Message:", "N/A", height=150)
 with col2:
     user_request = st.text_area("Your Goal for the Reply:", "A polite message saying I'll send them this evening.", height=150)
 
