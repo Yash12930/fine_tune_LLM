@@ -122,3 +122,7 @@ The primary goal of fine-tuning—**task specialization**—was clearly achieved
 * [x] **Data Science Report**: This README serves as the data science report, covering fine-tuning and evaluation.
 * [x] **Interaction Logs**: The full chat history with me (the AI assistant) is included as `INTERACTION_LOG.md`.
 * [x] **Demo Screenshots**: A screenshot of the UI is included above.
+
+
+
+Note: To view the jupyter notebooks, you have to download them, since github does not render interactive elements, and the interactive elements cause github to output invalid notebook. All the relevant codes are included in the .py files.
