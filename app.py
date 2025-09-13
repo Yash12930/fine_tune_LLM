@@ -39,7 +39,6 @@ def planner(user_request: str, incoming_message: str) -> dict:
     plan = { "task": "generate_reply", "prompt": prompt } 
     return plan
 
-# FIX: Added the Executor function to match the architecture
 def executor(plan: dict):
     """Executes the plan from the planner by calling the model tool."""
     prompt = plan.get("prompt")

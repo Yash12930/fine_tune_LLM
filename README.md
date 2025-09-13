@@ -23,6 +23,9 @@ This project is an AI agent designed to automate the daily task of drafting repl
 
 The core of the agent is a fine-tuned `TinyLlama-1.1B-Chat-v1.0` model, which has been specialized for this task using **Parameter-Efficient Fine-Tuning (PEFT)** with LoRA.
 
+to view the chat log i have used the Gemini LLM to help me out.
+here is the log: 
+
 ## 📜 Features
 
 * **Task Automation**: Automates the task of drafting emails and messages for common university and professional scenarios.
@@ -111,10 +114,6 @@ A qualitative evaluation was performed by comparing the outputs of the **fine-tu
 * **Better Formatting and Style**: The fine-tuned model is better at generating clean, ready-to-use text. In **Test Case #10**, it produces a concise message, while the base model includes extra placeholders.
 
 The primary goal of fine-tuning—**task specialization**—was clearly achieved, leading to improved reliability and adapted style for the target use case.
-
-## ✨ Demo Screenshot
-Here is a screenshot of the Streamlit application in action.
-
 
 ## ✅ Deliverables Checklist
 

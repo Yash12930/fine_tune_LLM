@@ -1,24 +1,51 @@
-AI Agent Architecture
-1. Overview
-This project is an AI agent designed to automate the task of drafting replies to messages, specifically for student and professional academic contexts. It follows a multi-agent Planner-Executor design pattern to structure its reasoning and execution flow.
+# AI Agent Architecture Report
 
-2. Components
-Planner Agent: A Python function (planner) that acts as the "thinking" component. It receives a high-level user goal and an incoming message, and its responsibility is to create a detailed, structured prompt. This represents the "planning" stage.
+## 1. Project Overview
+**Agent Name:** Conversational Assistant for Formal Communication  
 
-Executor Agent: A Python function (executor) that acts as the "doing" component. It receives the structured plan from the Planner and executes the task by calling the appropriate specialized tool.
+**Objective:**  
+The goal of this project is to build an AI agent that helps users draft polite, effective, and context-aware responses in academic and professional settings. The assistant focuses on formal and semi-formal communication, making it useful for tasks such as replying to emails, requesting extensions, or politely declining invitations.  
 
-Specialized Tool (Fine-Tuned Model): The core tool is a TinyLlama/TinyLlama-1.1B-Chat-v1.0 model that has been fine-tuned using LoRA. This model is an expert at the specific task of generating coherent, helpful responses for student-related conversations.
+---
 
-3. Interaction Flow
-A user provides a high-level goal (e.g., "a polite decline") and an incoming message.
+## 2. Agent Architecture: Single-Agent System
+This system is designed as a **single-agent architecture**, chosen for its balance of simplicity, efficiency, and suitability for CPU-only environments.  
 
-The Planner Agent creates a detailed prompt formatted for the specialized tool.
+**Workflow:**  ```User Input (Message + Request) → Optimized Prompt Template → Fine-Tuned LLM → Generated Response → User```
 
-The Executor Agent receives this prompt and calls the Fine-Tuned Model Tool.
+### Architectural Components
 
-The model generates a response, which the Executor cleans up and returns as the final output.
+- **User Input Interface**  
+  The user provides:  
+  - **incoming_message:** the original message they received (or "N/A" if they are starting the conversation).  
+  - **user_request:** their goal for the response (e.g., “a polite decline,” “request an extension”).  
 
-4. Design Choices
-Model: TinyLlama/TinyLlama-1.1B-Chat-v1.0 was chosen for its excellent balance of performance and efficiency, which allows for very fast fine-tuning on free, consumer-grade hardware like Google Colab.
+- **Prompt Engineering Layer**  
+  Inputs are formatted using the official **TinyLlama-Chat prompt template** (`tokenizer.apply_chat_template`).  
+  This ensures the request is structured in a way the model understands best, improving accuracy and tone.  
 
-Fine-Tuning: The model was fine-tuned for task specialization. The goal was to adapt its style to be more effective at generating student-related conversational replies than the base model, thereby improving its reliability and the quality of its outputs for this specific use case.
+- **Core Logic (AI Agent)**  
+  - **Model:** Fine-tuned **TinyLlama/TinyLlama-1.1B-Chat-v1.0**  
+  - **Task:** End-to-end text generation. The model takes the structured input and produces a polished response in one step.  
+
+- **Output Generation**  
+  The raw model output is cleaned and decoded so the user only sees the final, professional message.  
+
+---
+
+## 3. Why a Single-Agent System?
+We considered a multi-agent design (e.g., separate “planner” and “executor”), but ultimately chose the single-agent approach. The main reasons are:  
+
+- **Efficiency and Deployment Feasibility**  
+  Since this project targets CPU-only environments, efficiency is critical. A single-agent system reduces inference calls by half, making it faster and cheaper to run.  
+
+- **Task Simplicity**  
+  Drafting formal communication is a relatively linear process. The fine-tuned TinyLlama model demonstrated strong ability to handle both planning and generation within a single step.  
+
+- **Ease of Development and Maintenance**  
+  A single-agent system is easier to build, debug, and maintain. This makes it more reliable, especially at the prototype stage.  
+
+---
+
+## 4. Summary
+The Conversational Assistant is built on a streamlined **single-agent architecture** that emphasizes clarity, efficiency, and practicality. By leveraging prompt engineering with TinyLlama and a clean input-to-output pipeline, the system can generate polished, context-aware responses suitable for formal communication, while remaining lightweight enough for CPU-based deployment.  
