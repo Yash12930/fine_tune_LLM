@@ -34,7 +34,7 @@ This system is designed as a **single-agent architecture**, chosen for its balan
 ---
 
 ## 3. Why a Single-Agent System?
-We considered a multi-agent design (e.g., separate “planner” and “executor”), but ultimately chose the single-agent approach. The main reasons are:  
+I considered a multi-agent design (e.g., separate “planner” and “executor”), but ultimately chose the single-agent approach. The main reasons are:  
 
 - **Efficiency and Deployment Feasibility**  
   Since this project targets CPU-only environments, efficiency is critical. A single-agent system reduces inference calls by half, making it faster and cheaper to run.  
