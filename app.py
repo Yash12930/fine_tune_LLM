@@ -34,7 +34,7 @@ except Exception as e:
 def planner(user_request: str, incoming_message: str) -> dict: #
     prompt = (
         f"### Human:\nI received the following message: \"{incoming_message}\". "
-        f"Please help me draft a response that is {user_request}.\n\n"
+        f"Please help me draft a short and crisp response that is {user_request}.\n\n"
         f"### Assistant:\n"
     ) 
     plan = {
@@ -50,7 +50,7 @@ col1, col2 = st.columns(2)
 with col1:
     incoming_message = st.text_area("Incoming Message:", "N/A", height=150) #
 with col2:
-    user_request = st.text_area("Your Goal for the Reply:", "i missed class on tuesday, help with attendance", height=150) #
+    user_request = st.text_area("Your Goal for the Reply:", "i missed class on tuesday, requesting help with attendance from professor", height=150) #
 
 if st.button("Generate Reply", type="primary"): 
     if not incoming_message or not user_request:
