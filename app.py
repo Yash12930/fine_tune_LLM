@@ -51,7 +51,7 @@ def executor(plan: dict):
     generation_kwargs = dict(
         inputs,
         streamer=streamer,
-        max_new_tokens=256,
+        max_new_tokens=150,
         do_sample=True,
         temperature=0.7,
         top_p=0.9,
