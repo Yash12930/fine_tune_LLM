@@ -35,12 +35,21 @@ here is the log: https://g.co/gemini/share/533cbe096690
 
 ## 🏗️ Architecture
 
-The agent follows a **Planner-Executor** design pattern to structure its reasoning and execution flow.
+The application is designed as a **single-agent system**, optimized for simplicity, readability, and maintainability. It follows a clear two-step logical flow:
 
-1.  **Planner Agent**: A Python function that acts as the "thinking" component. It receives the user's goal and any incoming message and creates a detailed, structured prompt for the model.
-2.  **Executor Agent**: A Python function that acts as the "doing" component. It takes the structured prompt from the Planner and executes the task by calling the specialized tool.
-3.  **Specialized Tool (Fine-Tuned Model)**: The core tool is the `TinyLlama-1.1B-Chat-v1.0` model fine-tuned using LoRA. This model is an expert at generating coherent responses for student-related conversations.
+1. **Prompt Construction (Planner Function)**  
+   - Takes the user's **goal** (e.g., “request an extension”) and any **incoming message** (context).  
+   - Formats these inputs into a structured prompt using the fine-tuned training format:  
 
+     ```
+     ### Human: <user input>
+     ### Assistant:
+     ```
+   - This ensures consistency between **training and inference**, improving the quality of responses.
+
+2. **Model Execution (Executor Function)**  
+   - Sends the structured prompt to the fine-tuned **TinyLlama model**.  
+   - Streams the generated response back to the user interface **in real time**, ensuring responsiveness and a natural conversational flow.
 
 ## 🛠️ Tech Stack
 
