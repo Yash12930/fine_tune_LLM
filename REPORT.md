@@ -32,3 +32,5 @@ Total Successes (Score >= 4):       8 / 10                      6 / 10
 Success Rate:                       80 %                        60 %
 
 Conclusion: The quantitative results clearly demonstrate that the fine-tuning process successfully specialized the model for the task, significantly improving its reliability and the quality of its outputs. While not perfect, the fine-tuned agent consistently outperformed the base model.
+
+![alt text](image-1.png)
