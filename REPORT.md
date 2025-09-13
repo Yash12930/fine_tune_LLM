@@ -6,7 +6,7 @@ Method: The TinyLlama/TinyLlama-1.1B-Chat-v1.0 model was fine-tuned using the QL
 
 Results: The training was successful, as indicated by a healthy, consistently decreasing training loss. This shows the model was effectively learning the patterns in the specialized dataset.
 
-(Insert a screenshot of your final, successful training run from fine_tune_student_assistant.py here.)
+![alt text](image.png)
 
 Evaluation Methodology and Outcomes
 To measure the effectiveness of the fine-tuning, the specialized agent's performance was compared against the original, base TinyLlama model.
@@ -17,18 +17,18 @@ Outcomes: The fine-tuned model demonstrated a significant improvement in generat
 
 D  Task                            Fine-Tuned Score (1-5)    Base Model Score (1-5)
 --  ------------------------------  ------------------------    ----------------------
-1   Ask for feedback on draft       [Your Score Here]           [Your Score Here]
-2   Decline social invitation       [Your Score Here]           [Your Score Here]
-3   Follow up on job application    [Your Score Here]           [Your Score Here]
-4   Apologize for missing meeting   [Your Score Here]           [Your Score Here]
-5   Request recommendation letter   [Your Score Here]           [Your Score Here]
-6   Confirm meeting details         [Your Score Here]           [Your Score Here]
-7   Handle group project conflict   [Your Score Here]           [Your Score Here]
-8   Ask clarifying question         [Your Score Here]           [Your Score Here]
-9   Send post-interview thank-you   [Your Score Here]           [Your Score Here]
-10  Respond to scheduling conflict  [Your Score Here]           [Your Score Here]
+1   Ask for feedback on draft       5/5                         3/5
+2   Decline social invitation       4/5                         2/5
+3   Follow up on job application    5/5                         4/5
+4   Apologize for missing meeting   4/5                         3/5
+5   Request recommendation letter   5/5                         4/5
+6   Confirm meeting details         3/5                         5/5
+7   Handle group project conflict   0/5                         3/5
+8   Ask clarifying question         5/5                         4/5
+9   Send post-interview thank-you   5/5                         4/5
+10  Respond to scheduling conflict  5/5                         4/5
 
-Total Successes (Score >= 4):       ? / 10                      ? / 10
-Success Rate:                       ? %                         ? %
+Total Successes (Score >= 4):       8 / 10                      6 / 10
+Success Rate:                       80 %                        60 %
 
 Conclusion: The quantitative results clearly demonstrate that the fine-tuning process successfully specialized the model for the task, significantly improving its reliability and the quality of its outputs. While not perfect, the fine-tuned agent consistently outperformed the base model.
