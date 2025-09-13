@@ -24,7 +24,7 @@ This project is an AI agent designed to automate the daily task of drafting repl
 The core of the agent is a fine-tuned `TinyLlama-1.1B-Chat-v1.0` model, which has been specialized for this task using **Parameter-Efficient Fine-Tuning (PEFT)** with LoRA.
 
 to view the chat log i have used the Gemini LLM to help me out.
-here is the log: 
+here is the log: https://g.co/gemini/share/533cbe096690
 
 ## 📜 Features
 
