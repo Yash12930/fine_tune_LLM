@@ -16,14 +16,13 @@ def load_specialist_model():
     tokenizer = AutoTokenizer.from_pretrained(merged_model_hub_id)
     model = AutoModelForCausalLM.from_pretrained(
         merged_model_hub_id,
-        torch_dtype=torch.float32, # float32 is best for CPU
+        torch_dtype=torch.float32,
         trust_remote_code=True,
     ).to("cpu")
     
     print("Pre-merged model loaded successfully on CPU.")
     return model, tokenizer
 
-# Load the model and tokenizer
 try:
     model, tokenizer = load_specialist_model()
 except Exception as e:
@@ -31,26 +30,48 @@ except Exception as e:
     st.stop()
 
 # --- 3. The Multi-Agent Workflow ---
-def planner(user_request: str, incoming_message: str) -> dict: #
+def planner(user_request: str, incoming_message: str) -> dict:
     prompt = (
         f"### Human:\nI received the following message: \"{incoming_message}\". "
-        f"Please help me draft a short and crisp response that is {user_request}.\n\n"
+        f"Please help me draft a response that is {user_request}.\n\n"
         f"### Assistant:\n"
     ) 
-    plan = {
-        "task": "generate_reply",
-        "prompt": prompt
-    } 
+    plan = { "task": "generate_reply", "prompt": prompt } 
     return plan
+
+# FIX: Added the Executor function to match the architecture
+def executor(plan: dict):
+    """Executes the plan from the planner by calling the model tool."""
+    prompt = plan.get("prompt")
+    if not prompt:
+        return
+
+    streamer = TextIteratorStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True) 
+    inputs = tokenizer(prompt, return_tensors="pt").to("cpu") 
+
+    generation_kwargs = dict(
+        inputs,
+        streamer=streamer,
+        max_new_tokens=256,
+        do_sample=True,
+        temperature=0.7,
+        top_p=0.9,
+    ) 
+
+    thread = Thread(target=model.generate, kwargs=generation_kwargs) 
+    thread.start() 
+    
+    st.success("Generated Reply:") 
+    st.write_stream(streamer)
 
 # --- 4. Main App Interface ---
 st.header("Draft a Reply") 
 col1, col2 = st.columns(2) 
 
 with col1:
-    incoming_message = st.text_area("Incoming Message:", "N/A", height=150) #
+    incoming_message = st.text_area("Incoming Message:", "N/A", height=150)
 with col2:
-    user_request = st.text_area("Your Goal for the Reply:", "requesting help with my low attendance from professor in his class", height=150) #
+    user_request = st.text_area("Your Goal for the Reply:", "requesting help with my low attendance from professor in his class", height=150)
 
 if st.button("Generate Reply", type="primary"): 
     if not incoming_message or not user_request:
@@ -58,23 +79,4 @@ if st.button("Generate Reply", type="primary"):
     else:
         with st.spinner("Agent is thinking and drafting a reply..."): 
             generated_plan = planner(user_request, incoming_message) 
-            prompt = generated_plan.get("prompt") 
-
-            streamer = TextIteratorStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True) 
-            
-            inputs = tokenizer(prompt, return_tensors="pt").to("cpu") 
-
-            generation_kwargs = dict(
-                inputs,
-                streamer=streamer,
-                max_new_tokens=256,
-                do_sample=True,
-                temperature=0.7,
-                top_p=0.9,
-            ) 
-
-            thread = Thread(target=model.generate, kwargs=generation_kwargs) 
-            thread.start() 
-
-            st.success("Generated Reply:") 
-            st.write_stream(streamer) 
+            executor(generated_plan)
