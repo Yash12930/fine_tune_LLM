@@ -23,6 +23,9 @@ This project is an AI agent designed to automate the daily task of drafting repl
 
 The core of the agent is a fine-tuned `TinyLlama-1.1B-Chat-v1.0` model, which has been specialized for this task using **Parameter-Efficient Fine-Tuning (PEFT)** with LoRA.
 
+The model has been hosted on https://huggingface.co/spaces/Yash12930/model 
+Feel free to check it out!
+
 to view the chat log i have used the Gemini LLM to help me out.
 here is the log: https://g.co/gemini/share/533cbe096690
 
@@ -35,12 +38,21 @@ here is the log: https://g.co/gemini/share/533cbe096690
 
 ## 🏗️ Architecture
 
-The agent follows a **Planner-Executor** design pattern to structure its reasoning and execution flow.
+The application is designed as a **single-agent system**, optimized for simplicity, readability, and maintainability. It follows a clear two-step logical flow:
 
-1.  **Planner Agent**: A Python function that acts as the "thinking" component. It receives the user's goal and any incoming message and creates a detailed, structured prompt for the model.
-2.  **Executor Agent**: A Python function that acts as the "doing" component. It takes the structured prompt from the Planner and executes the task by calling the specialized tool.
-3.  **Specialized Tool (Fine-Tuned Model)**: The core tool is the `TinyLlama-1.1B-Chat-v1.0` model fine-tuned using LoRA. This model is an expert at generating coherent responses for student-related conversations.
+1. **Prompt Construction (Planner Function)**  
+   - Takes the user's **goal** (e.g., “request an extension”) and any **incoming message** (context).  
+   - Formats these inputs into a structured prompt using the fine-tuned training format:  
 
+     ```
+     ### Human: <user input>
+     ### Assistant:
+     ```
+   - This ensures consistency between **training and inference**, improving the quality of responses.
+
+2. **Model Execution (Executor Function)**  
+   - Sends the structured prompt to the fine-tuned **TinyLlama model**.  
+   - Streams the generated response back to the user interface **in real time**, ensuring responsiveness and a natural conversational flow.
 
 ## 🛠️ Tech Stack
 
@@ -122,3 +134,7 @@ The primary goal of fine-tuning—**task specialization**—was clearly achieved
 * [x] **Data Science Report**: This README serves as the data science report, covering fine-tuning and evaluation.
 * [x] **Interaction Logs**: The full chat history with me (the AI assistant) is included as `INTERACTION_LOG.md`.
 * [x] **Demo Screenshots**: A screenshot of the UI is included above.
+
+
+
+Note: To view the jupyter notebooks, you have to download them, since github does not render interactive elements, and the interactive elements cause github to output invalid notebook. All the relevant codes are included in the .py files.

@@ -93,7 +93,7 @@ To measure effectiveness, the specialized agent’s performance was compared aga
 
 ---
 
-### Visual Comparison
+### Sample Output
 ![Evaluation Results](image-1.png)  
 
 ---
