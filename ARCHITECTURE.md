@@ -21,8 +21,8 @@ This system is designed as a **single-agent architecture**, chosen for its balan
   - **user_request:** their goal for the response (e.g., “a polite decline,” “request an extension”).  
 
 - **Prompt Engineering Layer**  
-  Inputs are formatted using the official **TinyLlama-Chat prompt template** (`tokenizer.apply_chat_template`).  
-  This ensures the request is structured in a way the model understands best, improving accuracy and tone.  
+  The model was fine-tuned and is prompted using a consistent `### Human: / ### Assistant: structure`.
+  This clear, turn-based format helps the model reliably understand its task and generate the appropriate response.
 
 - **Core Logic (AI Agent)**  
   - **Model:** Fine-tuned **TinyLlama/TinyLlama-1.1B-Chat-v1.0**  
