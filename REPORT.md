@@ -14,9 +14,13 @@ Fine-tuning the **TinyLlama-1.1B-Chat** model on a targeted dataset of academic 
 ## 2. Data Preparation & Fine-Tuning
 
 ### 2.1 Dataset Curation
-- **Source Dataset:** [Databricks Dolly-15k](https://huggingface.co/datasets/databricks/dolly-15k)  
-- **Filtering Strategy:** The dataset was filtered to isolate examples relevant to formal communication. A keyword-based approach was applied, focusing on terms like *"professor," "email," "assignment," "deadline,"* and *"professional"* in the instruction and category fields.  
-- **Final Dataset:** 517 curated examples of academic and professional communication.  
+- **Initial Attempt:** Started with the [OpenAssistant Guanaco dataset](https://huggingface.co/datasets/timdettmers/openassistant-guanaco), filtered for English.  
+  - **Issue:** While large and diverse, it was **too general-purpose** and not focused enough on academic/professional communication.  
+- **Custom Dataset Attempt:** Considered creating a small dataset of personal emails (~50 samples).  
+  - **Issue:** The dataset size was too limited to support meaningful fine-tuning.  
+- **Final Choice:** [Databricks Dolly-15k](https://huggingface.co/datasets/databricks/dolly-15k), filtered down to **517 curated examples** of student, academic, and professional communication.  
+  - **Filtering Strategy:** Selected tasks containing keywords such as *"professor," "email," "assignment," "deadline,"* and *"professional"* in the instruction/category fields.  
+  - **Reasoning:** Balanced size, relevance, and diversity while staying domain-specific.
 
 ### 2.2 Fine-Tuning Method: PEFT (LoRA)
 - **Base Model:** `TinyLlama/TinyLlama-1.1B-Chat-v1.0`  
@@ -31,15 +35,33 @@ Fine-tuning the **TinyLlama-1.1B-Chat** model on a targeted dataset of academic 
 - **Epochs:** 1  
 - **Learning Rate:** 2e-5  
 - **Batch Size:** 2  
-- **Gradient Accumulation Steps:** 4 (Effective Batch Size = 8)  
-- **Optimizer:** `paged_adamw_8bit`  
+- **Gradient Accumulation Steps:** 4 (Effective Batch Size = 8)
 - **Precision:** `fp16` (Mixed Precision)  
 
 ---
 
-## 3. Evaluation Methodology
+## 3. Model Selection Journey
+The choice of base model evolved through several iterations:  
 
-### 3.1 Qualitative Evaluation
+1. **Gemma-3 4B**  
+   - **Reason for Initial Choice:** Strong performance and modern architecture.  
+   - **Problem:** The model **overfit very quickly** (loss approaching 0), likely due to being too advanced for the small dataset size.  
+   
+2. **Gemma-2B**  
+   - **Reason for Switching:** Attempted to use a slightly smaller model to balance performance and data size.  
+   - **Problem:** Still too resource-intensive to **host/deploy cost-effectively**.  
+
+3. **Final Choice – TinyLlama-1.1B**  
+   - **Reasoning:**  
+     - Lightweight enough to **host on smaller servers**.  
+     - Pre-trained as a **chat model**, making it well-suited for conversational fine-tuning.  
+     - Avoided severe overfitting on the filtered dataset, striking the right balance between capability and deployability.
+
+---
+
+## 4. Evaluation Methodology
+
+### 4.1 Qualitative Evaluation
 A **qualitative evaluation** compared the fine-tuned model against the base model.  
 
 - **Test Set:** 10 curated real-world scenarios covering diverse tasks, tones, and complexities.  
@@ -52,7 +74,7 @@ A **qualitative evaluation** compared the fine-tuned model against the base mode
 
 ---
 
-## 4. Results & Analysis
+## 5. Results & Analysis
 
 ### Training Progress
 The fine-tuning process was successful, as indicated by a healthy, consistently decreasing training loss. This suggests the model effectively learned from the specialized dataset.  
@@ -98,7 +120,7 @@ To measure effectiveness, the specialized agent’s performance was compared aga
 
 ---
 
-## 5. Conclusion
+## 6. Conclusion
 The fine-tuning process was **highly successful**.  
 
 - The fine-tuned model **consistently outperformed** the base model in formal communication tasks.  

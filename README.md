@@ -19,21 +19,20 @@ pinned: false
 
 ## Overview
 
-This project is an AI agent designed to automate the daily task of drafting replies to messages, specifically tailored for student and professional academic contexts. The agent follows a **Planner-Executor** design pattern to structure its reasoning and execution flow, ensuring coherent and contextually appropriate responses.
+This project is an AI agent designed to automate the daily task of drafting replies to messages, specifically tailored for student and professional academic contexts.
 
 The core of the agent is a fine-tuned `TinyLlama-1.1B-Chat-v1.0` model, which has been specialized for this task using **Parameter-Efficient Fine-Tuning (PEFT)** with LoRA.
 
 The model has been hosted on https://huggingface.co/spaces/Yash12930/model 
 Feel free to check it out!
 
-to view the chat log i have used the Gemini LLM to help me out.
+To view the chat log I used the Gemini LLM to help me out.
 here is the log: https://g.co/gemini/share/533cbe096690
 
 ## 📜 Features
 
 * **Task Automation**: Automates the task of drafting emails and messages for common university and professional scenarios.
 * **Fine-Tuned Model**: Utilizes a specialized LoRA fine-tuned `TinyLlama` model for improved response quality and relevance.
-* **Multi-Agent Architecture**: Implements a Planner-Executor agent design for structured reasoning and task execution.
 * **Interactive UI**: A web-based user interface built with Streamlit for easy interaction.
 
 ## 🏗️ Architecture
