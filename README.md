@@ -27,7 +27,7 @@ The model has been hosted on https://huggingface.co/spaces/Yash12930/model
 Feel free to check it out!
 
 To view the chat log I used the Gemini LLM to help me out.
-here is the log: https://g.co/gemini/share/533cbe096690
+here is the log: https://g.co/gemini/share/9cfab645ec65
 
 ## 📜 Features
 
